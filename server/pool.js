@@ -2,16 +2,20 @@ const pq = require('pg');
 const Pool = pg.Pool;
 
 const pool = new Pool({
-    database: "To-Do-List"
+    database: "TODO_LIST_WC"
     host: "localhost",
     port: 5432,
     max: 10,
     idleTimeoutMills: 30000
 });
 
-pool.on('error', () => {
-    console.warn(`Error with Database: ${err}`);
 
-});
+pool.on('connect', () => {
+    console.log(`Pool connected!: ${err}`);
 
-module.exports = pool;
+    pool.on('error', () => {
+        console.warn(`Error with Database: ${err}`);
+
+    });
+
+    module.exports = pool;
